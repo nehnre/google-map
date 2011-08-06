@@ -19,10 +19,12 @@
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	codeAddress("上海钦州路100号");
+	
   }
  
-  function codeAddress() {
-    var address = document.getElementById("address").value;
+  function codeAddress(address) {
+    //var address = document.getElementById("address").value;
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         map.setCenter(results[0].geometry.location);
