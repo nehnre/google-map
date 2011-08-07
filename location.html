@@ -6,7 +6,22 @@
 <title>Google Maps JavaScript API v3 Example: Geocoding Simple</title> 
 <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" /> 
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
+<script type="text/javascript" src="./js/core.js"></script> 
 <script type="text/javascript"> 
+	var company = [];
+	company.push({
+		title : "华东理工大学",
+		address : "上海市梅陇路130号",
+		instruments : [{
+			pic : "./images/eastchinauniversity_1.jpg",
+			name : "全自动物理与化学吸附仪",
+			link : "http://eshare.sgst.cn/equipment/201101/t20110111_514931.htm"
+		},{
+			pic : "./images/eastchinauniversity_2.jpg",
+			name : "高效液相色谱（凝胶渗透）",
+			link : "http://eshare.sgst.cn/equipment/201101/t20110111_514974.htm"
+		}]
+	});
   var geocoder;
   var map;
   function initialize() {
@@ -18,19 +33,30 @@
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-	codeAddress("上海钦州路100号");
-	codeAddress("上海");
+	for(var i = 0; i < company.length; i ++){
+		var instruments = company[i].instruments;
+		var message = "";
+		for(var j = 0; j < instruments.length; j ++){
+			message += "<div><img src='{0}' /><a href='{1}' target='_blank'>{2}</a></div>".format(instruments[j].pic, instruments[j].link, instruments[j].name);
+		}
+		codeAddress(company[i].address, message, company[i].title);
+	}
   }
  
-	function codeAddress(address, message) {
+	function codeAddress(address, message, title) {
+		if(!address){
+			return;
+		}
 		message = message || address;
+		title = title || address;
 		//var address = document.getElementById("address").value;
 		geocoder.geocode( { 'address': address}, function(results, status) {
 		  if (status == google.maps.GeocoderStatus.OK) {
 			map.setCenter(results[0].geometry.location);
 			var marker = new google.maps.Marker({
 				map: map, 
-				position: results[0].geometry.location
+				position: results[0].geometry.location,
+				title: title
 			});
 			attachSecretMessage(marker, message);
 		  } else {
