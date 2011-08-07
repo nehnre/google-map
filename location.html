@@ -37,7 +37,7 @@
 		var instruments = company[i].instruments;
 		var message = "";
 		for(var j = 0; j < instruments.length; j ++){
-			message += "<div><img src='{0}' /><a href='{1}' target='_blank'>{2}</a></div>".format(instruments[j].pic, instruments[j].link, instruments[j].name);
+			message += "<div><img width='20' height='20' src='{0}' /><a href='{1}' target='_blank' style='font-size:12px'>{2}</a></div>".format(instruments[j].pic, instruments[j].link, instruments[j].name);
 		}
 		codeAddress(company[i].address, message, company[i].title);
 	}
