@@ -11,9 +11,9 @@
   var map;
   function initialize() {
     geocoder = new google.maps.Geocoder();
-    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    var latlng = new google.maps.LatLng(1.369197,2.469177);
     var myOptions = {
-      zoom: 8,
+      zoom: 10,
       center: latlng,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
@@ -22,20 +22,33 @@
 	codeAddress("上海");
   }
  
-  function codeAddress(address) {
-    //var address = document.getElementById("address").value;
-    geocoder.geocode( { 'address': address}, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        map.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
-            map: map, 
-            position: results[0].geometry.location
-        });
-      } else {
-        alert("Geocode was not successful for the following reason: " + status);
-      }
-    });
-  }
+	function codeAddress(address, message) {
+		message = message || address;
+		//var address = document.getElementById("address").value;
+		geocoder.geocode( { 'address': address}, function(results, status) {
+		  if (status == google.maps.GeocoderStatus.OK) {
+			map.setCenter(results[0].geometry.location);
+			var marker = new google.maps.Marker({
+				map: map, 
+				position: results[0].geometry.location
+			});
+			attachSecretMessage(marker, message);
+		  } else {
+			alert("Geocode was not successful for the following reason: " + status);
+		  }
+		});
+	}
+	
+	//绑定window事件
+	function attachSecretMessage(marker, message) {
+	  //var message = ["This","is","the","secret","message"];
+		var infowindow = new google.maps.InfoWindow({
+			content: message
+		});
+		google.maps.event.addListener(marker, 'click', function() {
+			infowindow.open(map,marker);
+		});
+	}  
 </script> 
 </head> 
 <body onload="initialize()"> 
