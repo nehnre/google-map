@@ -3,7 +3,7 @@
 <head> 
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/> 
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
-<title>Google Maps JavaScript API v3 Example: Geocoding Simple</title> 
+<title>谷歌地图测试</title> 
 <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" /> 
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
 <script type="text/javascript" src="./js/core.js"></script> 
@@ -49,7 +49,7 @@
     map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	for(var i = 0; i < company.length; i ++){
 		var instruments = company[i].instruments;
-		var message = "";
+		var message = "<div style='line-height:40px'>{0}</div>".format(company[i].title);
 		for(var j = 0; j < instruments.length; j ++){
 			message += "<div><img width='20' height='20' src='{0}' /><a href='{1}' target='_blank' style='font-size:12px'>{2}</a></div>".format(instruments[j].pic, instruments[j].link, instruments[j].name);
 		}
